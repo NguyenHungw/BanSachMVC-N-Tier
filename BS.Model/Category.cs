@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace BanSach2MVC.Models
+namespace BanSach2.Model
 {
     public class Category
     {

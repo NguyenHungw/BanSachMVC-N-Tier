@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bans.Model;
+using BanSach2.DataAcess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BanSach2MVC.Data;
-using BanSach2MVC.Models;
+
+
 
 namespace BanSach2MVC.Controllers
 {

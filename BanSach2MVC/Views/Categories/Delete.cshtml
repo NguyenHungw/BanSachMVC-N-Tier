@@ -1,7 +1,7 @@
-﻿@model Category
+﻿@model Bans.Model.Category
 
-<form method="post" asp-action="DeletePost" >
-    <input asp-for="ID" hidden/>
+<form method="post" asp-action="DeletePost">
+    <input asp-for="ID" hidden />
     <div class="border p-3 mt-4">
         <div class="row p-2">
             <h2>Delete Catogory</h2>
@@ -22,6 +22,6 @@
         <a asp-controller="Category" asp-action="Index" class="btn btn-primary">Back To List</a>
     </div>
 </form>
-@section Scripts{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

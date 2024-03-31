@@ -1,8 +1,10 @@
 ﻿
+
+using Bans.Model;
+using BanSach2.DataAcess;
 using Microsoft.AspNetCore.Mvc;
 
-using BanSach2MVC.Data;
-using BanSach2MVC.Models;
+
 
 namespace BanSachMVC_Unica.Controllers
 {

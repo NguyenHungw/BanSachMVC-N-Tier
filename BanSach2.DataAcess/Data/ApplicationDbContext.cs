@@ -1,8 +1,9 @@
-﻿using BanSach2MVC.Models;
+﻿
+using Bans.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace BanSach2MVC.Data
+namespace BanSach2.DataAcess
 {
     public class ApplicationDbContext : DbContext
     {

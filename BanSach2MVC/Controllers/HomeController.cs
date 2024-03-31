@@ -1,4 +1,4 @@
-﻿using BanSach2MVC.Models;
+﻿using Bans.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

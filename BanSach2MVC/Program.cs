@@ -1,4 +1,4 @@
-using BanSach2MVC.Data;
+using BanSach2.DataAcess;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
