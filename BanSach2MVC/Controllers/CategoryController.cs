@@ -2,6 +2,7 @@
 
 using Bans.Model;
 using BanSach2.DataAcess;
+using BanSach2.DataAcess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -10,16 +11,16 @@ namespace BanSachMVC_Unica.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _UnitOfWork;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(IUnitOfWork UnitOfWork)
         {
-            _db = db;
+            _UnitOfWork = UnitOfWork;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _db.Categories.ToList();
+            IEnumerable<Category> objCategoryList = _UnitOfWork.Category.GetAll();
             return View(objCategoryList);
         }
         public IActionResult Create()
@@ -36,8 +37,8 @@ namespace BanSachMVC_Unica.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _UnitOfWork.Category.Add(obj);
+                _UnitOfWork.Category.Save();
                 TempData["Sucess"] = "Category Create Successful";
                 return RedirectToAction("index");
             }
@@ -49,14 +50,14 @@ namespace BanSachMVC_Unica.Controllers
             {
                 return NotFound();
             }
-            var categoryfromDB = _db.Categories.Find(id);
-            /*  var categoryfromDBFirst = _db.Categories.FirstOrDefault(u=>u.ID == id);
-              var categoryfromDBSingle = _db.Categories.SingleOrDefault(u=>u.ID == id);*/
-            if (categoryfromDB == null)
+           // var categoryfromDB = _db.Categories.Find(id);
+             var categoryfromDBFirst = _UnitOfWork.Category.GetFistOrDefault(u=>u.ID == id);
+            //  var categoryfromDBSingle = _db.Categories.SingleOrDefault(u=>u.ID == id);
+            if (categoryfromDBFirst == null)
             {
                 return NotFound();
             }
-            return View(categoryfromDB);
+            return View(categoryfromDBFirst);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -68,8 +69,8 @@ namespace BanSachMVC_Unica.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _UnitOfWork.Category.Update(obj);
+                _UnitOfWork.Save();
                 TempData["Sucess"] = "Category Update Successful";
                 return RedirectToAction("index");
             }
@@ -81,7 +82,7 @@ namespace BanSachMVC_Unica.Controllers
             {
                 return NotFound();
             }
-            var categoryfromDB = _db.Categories.Find(id);
+            var categoryfromDB = _UnitOfWork.Category.GetFistOrDefault(u => u.ID == id);
             /*  var categoryfromDBFirst = _db.Categories.FirstOrDefault(u=>u.ID == id);
               var categoryfromDBSingle = _db.Categories.SingleOrDefault(u=>u.ID == id);*/
             if (categoryfromDB == null)
@@ -94,15 +95,15 @@ namespace BanSachMVC_Unica.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var obj = _db.Categories.Find(id);
+            var obj = _UnitOfWork.Category.GetFistOrDefault(u => u.ID == id);
             if (obj.Name == null)
             {
                 return NotFound();
             }
             else
             {
-                _db.Categories.Remove(obj);
-                _db.SaveChanges();
+                _UnitOfWork.Category.Remove(obj);
+                _UnitOfWork.Save();
                 TempData["Sucess"] = "Category Delete Successful";
                 return RedirectToAction("index");
             }
