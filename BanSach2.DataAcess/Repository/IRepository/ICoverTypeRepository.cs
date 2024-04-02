@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bans.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace BanSach2.DataAcess.Repository.IRepository
 {
-    public interface IUnitOfWork
+    public interface ICoverTypeRepository : IRepository<CoverType>
     {
-        ICategoryRepository Category { get; }
-        ICoverTypeRepository CoverType { get; }
-
-        void Save();
+        void Update(CoverType coverType);
+       // void Save();
     }
 }

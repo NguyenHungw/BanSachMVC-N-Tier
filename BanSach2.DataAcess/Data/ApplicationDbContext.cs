@@ -11,6 +11,8 @@ namespace BanSach2.DataAcess
         {
 
         }
-        public DbSet<Category> Categories { get; set; }
+        public  DbSet<Category> Categories { get; set; }
+        public  DbSet<CoverType> CoverTypes { get; set; }
+
     }
 }

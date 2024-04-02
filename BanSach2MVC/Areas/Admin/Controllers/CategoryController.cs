@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 
 
-namespace BanSachMVC_Unica.Controllers
+namespace BanSach2MVC.Areas.Admin.Controllers
 {
+   [Area("Admin")]
+
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _UnitOfWork;
@@ -50,8 +52,8 @@ namespace BanSachMVC_Unica.Controllers
             {
                 return NotFound();
             }
-           // var categoryfromDB = _db.Categories.Find(id);
-             var categoryfromDBFirst = _UnitOfWork.Category.GetFistOrDefault(u=>u.ID == id);
+            // var categoryfromDB = _db.Categories.Find(id);
+            var categoryfromDBFirst = _UnitOfWork.Category.GetFistOrDefault(u => u.ID == id);
             //  var categoryfromDBSingle = _db.Categories.SingleOrDefault(u=>u.ID == id);
             if (categoryfromDBFirst == null)
             {
