@@ -25,11 +25,13 @@ namespace Bans.Model
         [Range(1, 100000000)]
         public double Price100 { get; set; }
         public string ImageURL {  get; set; }
+        [Required]
+
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
         [Required]
         public int CoverTypeId { get; set; }
-        public Category CoverType { get; set; }
+        public CoverType CoverType { get; set; }
     }
 }

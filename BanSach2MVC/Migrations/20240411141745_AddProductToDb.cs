@@ -34,9 +34,9 @@ namespace BanSach2MVC.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CoverTypeId",
+                        name: "FK_Products_CoverTypes_CoverTypeId",
                         column: x => x.CoverTypeId,
-                        principalTable: "Categories",
+                        principalTable: "CoverTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });

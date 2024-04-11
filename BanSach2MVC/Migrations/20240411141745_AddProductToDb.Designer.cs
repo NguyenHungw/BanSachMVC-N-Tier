@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BanSach2MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240410162057_AddProductToDb")]
+    [Migration("20240411141745_AddProductToDb")]
     partial class AddProductToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,7 +120,7 @@ namespace BanSach2MVC.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bans.Model.Category", "CoverType")
+                    b.HasOne("Bans.Model.CoverType", "CoverType")
                         .WithMany()
                         .HasForeignKey("CoverTypeId")
                         .OnDelete(DeleteBehavior.Cascade)

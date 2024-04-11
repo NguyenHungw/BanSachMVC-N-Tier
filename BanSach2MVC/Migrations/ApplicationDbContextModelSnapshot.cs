@@ -118,7 +118,7 @@ namespace BanSach2MVC.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bans.Model.Category", "CoverType")
+                    b.HasOne("Bans.Model.CoverType", "CoverType")
                         .WithMany()
                         .HasForeignKey("CoverTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
