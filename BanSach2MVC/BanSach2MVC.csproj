@@ -26,4 +26,8 @@
     <ProjectReference Include="..\BanSach2.DataAcess\BanSach2.DataAcess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>

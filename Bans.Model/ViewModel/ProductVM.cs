@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 
@@ -10,10 +12,13 @@ namespace Bans.Model.ViewModel
 {
     public class ProductVM
     {
-         public Product product {  get; set; }
+
+        public Product product {  get; set; }
         //convert list category thanh list item
+
+        [ValidateNever]
         public IEnumerable<SelectListItem> CategoryList { get; set; }
-         
+        [ValidateNever]
         public IEnumerable<SelectListItem> CoverTypeList { get; set; }
 
     }

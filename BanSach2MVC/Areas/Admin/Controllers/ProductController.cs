@@ -17,10 +17,12 @@ namespace BanSach2MVC.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _UnitOfWork;
+        private IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IUnitOfWork UnitOfWork)
+        public ProductController(IUnitOfWork UnitOfWork , IWebHostEnvironment webHostEnvironment)
         {
             _UnitOfWork = UnitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -56,6 +58,7 @@ namespace BanSach2MVC.Areas.Admin.Controllers
                 }
                                 );*/
            ProductVM productVM = new ProductVM();
+
             productVM.product = new Product();
             productVM.CategoryList = _UnitOfWork.Category.GetAll().Select(
                 u => new SelectListItem
@@ -73,6 +76,7 @@ namespace BanSach2MVC.Areas.Admin.Controllers
 
             if (id == null || id == 0)
             {
+
                 //create product
                 /*ViewBag.CategoryList = CategoryList;
                 ViewData["CoverTypeList"] = CoverTypeList;*/
@@ -84,13 +88,14 @@ namespace BanSach2MVC.Areas.Admin.Controllers
                 //update
 
             }
-           
-           
+
+          
+
             return View(productVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(CoverType obj)
+        public IActionResult Upsert(ProductVM obj,IFormFile file)
         {
           /*  if (obj.Name == obj.DisplayOrder.ToString())
             {
@@ -98,9 +103,24 @@ namespace BanSach2MVC.Areas.Admin.Controllers
             }*/
             if (ModelState.IsValid)
             {
-                _UnitOfWork.CoverType.Update(obj);
+                //upload images
+                string wwwrootpath = _webHostEnvironment.WebRootPath;
+                if(file != null)
+                {
+                    string filename= Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwrootpath, @"images\products");
+                    var extension = Path.GetExtension(file.FileName);
+                    using (var fileStream = new FileStream(Path.Combine(uploads, filename + extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+
+                    }
+                    obj.product.ImageURL = @"images\products"+filename+extension;
+
+                }
+                _UnitOfWork.Product.Add(obj.product);
                 _UnitOfWork.Save();
-                TempData["Sucess"] = "CoverType Update Successful";
+                TempData["Sucess"] = "product create Successful";
                 return RedirectToAction("index");
             }
             return View(obj);
