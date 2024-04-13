@@ -29,15 +29,19 @@ namespace Bans.Model
         [ValidateNever]
 
         public string ImageURL {  get; set; }
+
         [Required]
 
         public int CategoryId { get; set; }
         [ValidateNever]
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
+
+
         [Required]
         public int CoverTypeId { get; set; }
         [ValidateNever]
+        [ForeignKey("CoverTypeId")]
         public CoverType CoverType { get; set; }
     }
 }

@@ -15,13 +15,10 @@ namespace BanSach2.DataAcess.Repository
         public ProductRepository(ApplicationDbContext db) :base(db)
         {
             _db = db;
-         
-        }
-        public void Save()
-        {
-        _db.SaveChanges();
-        }
+          /*  _db.Products.Include(u => u.Category).Include(u => u.Category);
+            _db.Products.Include(u => u.CoverType).Include(u => u.CoverType);         */
 
+        }
         public void Update(Product product)
         {
             //cap nhat hinh anh no se khac

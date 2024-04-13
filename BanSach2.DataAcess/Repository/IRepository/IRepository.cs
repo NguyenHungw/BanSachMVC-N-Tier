@@ -11,8 +11,10 @@ namespace BanSach2.DataAcess.Repository.IRepository
     public interface IRepository<T> where T : class
     {
         // T-Category
-        T GetFistOrDefault(Expression <Func<T, bool>> filter);
-        IEnumerable<T> GetAll();
+        T GetFistOrDefault(Expression <Func<T, bool>> filter,string? includeProperties=null);
+        IEnumerable<T> GetAll(string? includeProperties = null);
+
+       
        // void GetAll(T entity);
         void Add(T entity);
         void Remove(T entity);

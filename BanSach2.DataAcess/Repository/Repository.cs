@@ -24,16 +24,49 @@ namespace BanSach2.DataAcess.Repository
             Dbset.Add(entity);
         }
 
-        public IEnumerable<T> GetAll()
+        //include category,covertype
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
+            if (Dbset == null)
+            {
+                throw new ArgumentNullException(nameof(Dbset), "Dbset is null.");
+            }
+
             IQueryable<T> query = Dbset;
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                // Sử dụng mảng kí tự phân cách để tăng tính linh hoạt
+                char[] separators = new char[] { ',', ';' };
+
+                foreach (var item in includeProperties.Split(separators, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(item.Trim());
+                }
+            }
             return query.ToList();
         }
 
-        public T GetFistOrDefault(Expression<Func<T, bool>> filter)
+        public T GetFistOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
+            if (Dbset == null)
+            {
+                throw new ArgumentNullException(nameof(Dbset), "Dbset is null.");
+            }
+
             IQueryable<T> query = Dbset;
-            query=query.Where(filter);
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                // Sử dụng mảng kí tự phân cách để tăng tính linh hoạt
+                char[] separators = new char[] { ',', ';' };
+
+                foreach (var item in includeProperties.Split(separators, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(item.Trim());
+                }
+            }
+            query =query.Where(filter);
             return query.FirstOrDefault();
         }
 

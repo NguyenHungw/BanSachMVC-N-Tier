@@ -33,30 +33,7 @@ namespace BanSach2MVC.Areas.Admin.Controllers
     
         public IActionResult Upsert(int? id)
         {
-           /* Product product = new Product();
-            //convert list category thanh list item
-            IEnumerable<SelectListItem> CategoryList = _UnitOfWork.Category.GetAll().Select(
-                u=> new SelectListItem()
-                {
-                    //tat ca property o trong selectlistitem co the tuy chon 
-                    Text=u.Name,
-                    //truyen value sang string 
-                    Value=u.ID.ToString(),
-
-                     
-                }
-                                );
-            IEnumerable <SelectListItem> CoverTypeList = _UnitOfWork.CoverType.GetAll().Select(
-                u => new SelectListItem()
-                {
-                    //tat ca property o trong selectlistitem co the tuy chon 
-                    Text = u.Name,
-                    //truyen value sang string 
-                    Value = u.ID.ToString(),
-
-
-                }
-                                );*/
+          
            ProductVM productVM = new ProductVM();
 
             productVM.product = new Product();
@@ -159,5 +136,21 @@ namespace BanSach2MVC.Areas.Admin.Controllers
 
             return View(obj);
         }
+
+        #region API_CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList = _UnitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
+
+          /*  var productList1 = _UnitOfWork.Product.GetAll( includeProperties: "Category");
+            var productList2 = _UnitOfWork.Product.GetAll(includeProperties: "CoverType");
+
+            var result = productList1.Concat(productList2).ToList();*/
+
+
+            return Json(new {data = productList });
+        }
+        #endregion
     }
 }
