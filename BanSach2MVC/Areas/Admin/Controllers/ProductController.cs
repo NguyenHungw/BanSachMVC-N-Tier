@@ -62,7 +62,11 @@ namespace BanSach2MVC.Areas.Admin.Controllers
             }
             else
             {
-                //update
+                //update product
+
+
+
+                productVM.product = _UnitOfWork.Product.GetFistOrDefault(u=>u.Id==id);
 
             }
 
@@ -87,6 +91,14 @@ namespace BanSach2MVC.Areas.Admin.Controllers
                     string filename= Guid.NewGuid().ToString();
                     var uploads = Path.Combine(wwwrootpath, @"images\products");
                     var extension = Path.GetExtension(file.FileName);
+                    if(obj.product.ImageURL != null)
+                    {
+                        var oldImagePath = Path.Combine(wwwrootpath, obj.product.ImageURL.TrimStart('\\'));
+                        if(System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
                     using (var fileStream = new FileStream(Path.Combine(uploads, filename + extension), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
@@ -95,7 +107,17 @@ namespace BanSach2MVC.Areas.Admin.Controllers
                     obj.product.ImageURL = @"images\products"+filename+extension;
 
                 }
-                _UnitOfWork.Product.Add(obj.product);
+                if (obj.product.Id == 0)
+                {
+                    _UnitOfWork.Product.Add(obj.product);
+
+                }
+                else
+                {
+                    _UnitOfWork.Product.Update(obj.product);
+                    _UnitOfWork.Product.Remove(obj.product);
+                }
+                //_UnitOfWork.Product.Add(obj.product);
                 _UnitOfWork.Save();
                 TempData["Sucess"] = "product create Successful";
                 return RedirectToAction("index");
