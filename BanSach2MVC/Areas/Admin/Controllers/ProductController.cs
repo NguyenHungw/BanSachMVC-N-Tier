@@ -6,6 +6,7 @@ using BanSach2.DataAcess;
 using BanSach2.DataAcess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using System.Collections.Generic;
 
 
@@ -139,26 +140,7 @@ namespace BanSach2MVC.Areas.Admin.Controllers
             }
             return View(categoryfromDB);
         }
-        [HttpPost, ActionName("DeletePost")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(int? id)
-        {
-            var obj = _UnitOfWork.CoverType.GetFistOrDefault(u => u.ID == id);
-            if (obj.Name == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                _UnitOfWork.CoverType.Remove(obj);
-                _UnitOfWork.Save();
-                TempData["Sucess"] = "CoverType Delete Successful";
-                return RedirectToAction("index");
-            }
-
-            return View(obj);
-        }
-
+       
         #region API_CALLS
         [HttpGet]
         public IActionResult GetAll()
@@ -173,6 +155,43 @@ namespace BanSach2MVC.Areas.Admin.Controllers
 
             return Json(new {data = productList });
         }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _UnitOfWork.Product.GetFistOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                if (obj.ImageURL != null)
+                {
+                    string wwwrootpath = _webHostEnvironment.WebRootPath;
+
+                    var oldImagePath = Path.Combine(wwwrootpath, obj.ImageURL.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+                _UnitOfWork.Product.Remove(obj);
+                _UnitOfWork.Save();
+                TempData["Sucess"] = "Product Delete Successful";
+                //return RedirectToAction("index");
+                return Json(new { success = true, message = "delete success" });
+            }
+
+            return View(obj);
+        }
+
         #endregion
     }
 }
