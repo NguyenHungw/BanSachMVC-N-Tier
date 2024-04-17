@@ -125,7 +125,7 @@ namespace BanSach2MVC.Areas.Admin.Controllers
             }
             return View(obj);
         }
-        public IActionResult Delete(int? id)
+        public IActionResult Deletecf(int? id)
         {
             if (id == null || id == 0)
             {
@@ -156,9 +156,10 @@ namespace BanSach2MVC.Areas.Admin.Controllers
             return Json(new {data = productList });
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpDelete, ActionName("Delete")]
+
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {

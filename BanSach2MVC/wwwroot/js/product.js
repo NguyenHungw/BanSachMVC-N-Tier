@@ -20,8 +20,9 @@ function loadDataable() {
                        <div>
                        <a href="/Admin/Product/Upsert?id=${data}"
                              class="btn btn-primary" > Edit</a>
+
                          
-                            <a class="btn btn-primary" onclick="Delete('/Admin/Product/DeletePost?id=${data}')" > Delete</a>
+                            <a class="btn btn-primary" > Delete</a>
                         </div>
                     `
             }
@@ -29,6 +30,7 @@ function loadDataable() {
 
 
         ]
+        
     });
 }
 
@@ -48,7 +50,7 @@ function Delete(url) {
                 url: url,
                 type: "DELETE",
                 success: function (data) {
-                   // debugger;
+                  //  debugger;
                     if (data.success) {
                         toastr.success(data.message)
                     } else {
