@@ -158,8 +158,8 @@ namespace BanSach2MVC.Areas.Admin.Controllers
 
         [HttpDelete, ActionName("Delete")]
 
-        [ValidateAntiForgeryToken]
-        public IActionResult Delete(int? id)
+       // [ValidateAntiForgeryToken]
+        public IActionResult Deletex(int? id)
         {
             if (id == null)
             {

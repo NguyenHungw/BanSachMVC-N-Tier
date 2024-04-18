@@ -6,8 +6,7 @@ $(document).ready(function () {
 function loadDataable() {
     datatable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/admin/product/getall"
-
+            "url": "/admin/product/getall",
         },
         "columns": [
             { "data": "name", "width": "15%" },
@@ -21,7 +20,6 @@ function loadDataable() {
                        <a href="/Admin/Product/Upsert?id=${data}"
                              class="btn btn-primary" > Edit</a>
 
-                         
                             <a class="btn btn-primary" > Delete</a>
                         </div>
                     `
@@ -34,7 +32,7 @@ function loadDataable() {
     });
 }
 
-function Delete(url) {
+function Deletex(url) {
     console.log(url);
     Swal.fire({
         title: "Are you sure?",
