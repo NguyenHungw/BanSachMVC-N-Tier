@@ -20,7 +20,7 @@ function loadDataable() {
                        <a href="/Admin/Product/Upsert?id=${data}"
                              class="btn btn-primary" > Edit</a>
 
-                            <a class="btn btn-primary" > Delete</a>
+                            <button class="btn btn-primary" onclick="Delete('/admin/product/delete?id=${data}')"" > Delete</a>
                         </div>
                     `
             }
@@ -32,7 +32,7 @@ function loadDataable() {
     });
 }
 
-function Deletex(url) {
+function Delete(url) {
     console.log(url);
     Swal.fire({
         title: "Are you sure?",
@@ -53,6 +53,7 @@ function Deletex(url) {
                         toastr.success(data.message)
                     } else {
                         toastr.error(data.message)
+                        //
                     }
                 }
             })

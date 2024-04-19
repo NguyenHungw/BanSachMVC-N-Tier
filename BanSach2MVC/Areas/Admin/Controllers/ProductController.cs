@@ -90,7 +90,7 @@ namespace BanSach2MVC.Areas.Admin.Controllers
                 if(file != null)
                 {
                     string filename= Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(wwwrootpath, @"images\products");
+                    var uploads = Path.Combine(wwwrootpath, @"images\products\");
                     var extension = Path.GetExtension(file.FileName);
                     if(obj.product.ImageURL != null)
                     {
@@ -105,7 +105,7 @@ namespace BanSach2MVC.Areas.Admin.Controllers
                         file.CopyTo(fileStream);
 
                     }
-                    obj.product.ImageURL = @"images\products"+filename+extension;
+                    obj.product.ImageURL = @"images\products\"+filename+extension;
 
                 }
                 if (obj.product.Id == 0)
@@ -159,7 +159,7 @@ namespace BanSach2MVC.Areas.Admin.Controllers
         [HttpDelete, ActionName("Delete")]
 
        // [ValidateAntiForgeryToken]
-        public IActionResult Deletex(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {

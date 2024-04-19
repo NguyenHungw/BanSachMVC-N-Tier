@@ -26,6 +26,16 @@ namespace Bans.Model
         [Range(1, 100000000)]
         public double Price100 { get; set; }
 
+        // Danh sách giá
+        [NotMapped] // Không ánh xạ vào cơ sở dữ liệu
+        public List<double> ListPrice
+        {
+            get
+            {
+                return new List<double> { Price50, Price100 };
+            }
+        }
+
         [ValidateNever]
 
         public string ImageURL {  get; set; }
