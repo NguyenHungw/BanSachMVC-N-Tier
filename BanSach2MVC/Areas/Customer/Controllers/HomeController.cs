@@ -15,13 +15,28 @@ namespace BanSach2MVC.Areas.Customer.Controllers
         {
             _logger = logger;
             _unitOfwork = unitOfWork;
-
         }
-
         public IActionResult Index()
         {
             IEnumerable <Product> products = _unitOfwork.Product.GetAll(includeProperties:"Category");
             return View(products);
+        }
+        public IActionResult Details(int id)
+        {
+            ShoppingCart cartobj = new()
+            {
+                Product = _unitOfwork.Product.GetFistOrDefault(u => u.Id == id, includeProperties: "Category,CoverType"),
+                count = 1,
+                ProductId = id
+            };
+            if(cartobj.Product != null)
+            {
+                return View(cartobj);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         public IActionResult Privacy()

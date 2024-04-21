@@ -13,13 +13,13 @@ namespace Bans.Model
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+      //  [Required]
         public string Name { get; set; }
-        [Required]
+      //  [Required]
         public string Description { get; set; }
-        [Required]
+       // [Required]
         public int ISBN { get; set; }
-        [Required]
+       // [Required]
         public string Author { get; set; }
         [Range(1,100000000)]
         public double Price50 { get; set; }
