@@ -1,4 +1,4 @@
-using BanSach2.DataAcess;
+﻿using BanSach2.DataAcess;
 using BanSach2.DataAcess.Repository;
 using BanSach2.DataAcess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +16,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("BanSach2MVC")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>()
+//Trong ASP.NET Core Identity,
+//thuộc tính RequireConfirmedAccount của lớp SignInOptions
+//được sử dụng để chỉ định xem
+//liệu tài khoản người dùng cần được xác nhận trước khi đăng nhập hay không.
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount=true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -42,7 +46,7 @@ app.UseRouting();
 app.UseAuthentication();;
 
 app.UseAuthorization();
-
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
