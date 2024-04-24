@@ -20,7 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //thuộc tính RequireConfirmedAccount của lớp SignInOptions
 //được sử dụng để chỉ định xem
 //liệu tài khoản người dùng cần được xác nhận trước khi đăng nhập hay không.
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount=true)
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();

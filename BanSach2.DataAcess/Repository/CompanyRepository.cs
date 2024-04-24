@@ -17,10 +17,10 @@ namespace BanSach2.DataAcess.Repository
             _db = db;
          
         }
-        public void Save()
+/*        public void Save()
         {
         _db.SaveChanges();
-        }
+        }*/
 
         public void Update(Company company)
         {

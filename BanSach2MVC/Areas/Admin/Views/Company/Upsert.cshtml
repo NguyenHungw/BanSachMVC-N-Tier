@@ -1,0 +1,62 @@
+﻿@* @model Bans.Model.Product
+ *@
+ @model Company
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="border p-3 mt-4">
+        <div class="row p-2">
+            @{
+                if (Model.Id != null)
+                {
+                    <h2>@(Model.Id == 0 ? "Create" : "Edit") Product</h2>
+                }
+                else
+                {
+                    <h2>Create Company</h2>
+                }
+            }
+            <hr />
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="StreetAddress"></label>
+            <input asp-for="StreetAddress" class="form-control" />
+            <span asp-validation-for="StreetAddress" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="City"></label>
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="State"></label>
+            <input asp-for="State" class="form-control" />
+            <span asp-validation-for="State" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        @if (Model.Id != null && Model.Id == 0)
+        {
+            <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" >Create</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary">Update</button>
+
+        }
+
+     
+       
+        <a asp-controller="company" asp-action="Index" class="btn btn-primary">Back To List</a>
+    </div>
+</form>
