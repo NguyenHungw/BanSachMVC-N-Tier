@@ -11,6 +11,7 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using Bans.Model;
+using BanSach2.DataAcess.Repository.IRepository;
 using BanSach2.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -34,14 +35,17 @@ namespace BanSach2MVC.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             RoleManager<IdentityRole> roleManager,
+            IUnitOfWork unitOfWork,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
+            _unitOfWork = unitOfWork;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -110,9 +114,12 @@ namespace BanSach2MVC.Areas.Identity.Pages.Account
             public string? State { get; set; }
             public string? PostalCode { get; set; }
             public string? PhoneNumber { get; set; }
-            public string? Roles { get; set; } 
+            public string? Role { get; set; }
+            public int? CompanyId { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
+            [ValidateNever]
+            public IEnumerable<SelectListItem> CompanyList { get; set; }
 
         }
 
@@ -137,7 +144,13 @@ namespace BanSach2MVC.Areas.Identity.Pages.Account
                         Text = i,
                         Value = i
                     }
-                    )
+                    ),
+                CompanyList = _unitOfWork.Company.GetAll().Select(x => new SelectListItem 
+                {
+                    Text = x.Name,
+                    Value=x.Id.ToString(),
+
+                })
             };
         }
 
@@ -156,12 +169,22 @@ namespace BanSach2MVC.Areas.Identity.Pages.Account
                 user.PostalCode = Input.PostalCode;
                 user.Name= Input.Name;
                 user.PhoneNumber = Input.PhoneNumber;
+                user.State = Input.State;
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    if (Input.Role == null)
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.Role_User_Indi);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, Input.Role);
+                    }
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
