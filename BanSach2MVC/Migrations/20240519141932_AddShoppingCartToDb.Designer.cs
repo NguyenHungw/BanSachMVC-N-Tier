@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BanSach2MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240519052439_addShoppingCard")]
-    partial class addShoppingCard
+    [Migration("20240519141932_AddShoppingCartToDb")]
+    partial class AddShoppingCartToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

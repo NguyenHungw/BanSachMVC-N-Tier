@@ -1,7 +1,9 @@
 ﻿using Bans.Model;
 using BanSach2.DataAcess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BanSach2MVC.Areas.Customer.Controllers
 {
@@ -37,6 +39,43 @@ namespace BanSach2MVC.Areas.Customer.Controllers
             {
                 return NotFound();
             }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            shoppingCart.ApplicationUserId = claim.Value;
+
+            // Tạo đối tượng ShoppingCart mới mà không thiết lập giá trị cho cột identity
+      /*       shoppingCart = new ShoppingCart
+            {
+                ApplicationUserId = claim.Value,
+                // Thiết lập các thuộc tính khác nếu cần
+            };*/
+            _unitOfwork.ShoppingCart.Add(shoppingCart);
+            _unitOfwork.Save();
+
+
+            return RedirectToAction(nameof(Index));
+
+
+          /*  ShoppingCart cartobj = new()
+            {
+                //Product = _unitOfwork.Product.GetFistOrDefault(u => u.Id == id, includeProperties: "Category,CoverType"),
+                count = 1,
+                
+            };
+            if (cartobj.Product != null)
+            {
+                return View(cartobj);
+            }
+            else
+            {
+                return NotFound();
+            }*/
         }
 
         public IActionResult Privacy()
