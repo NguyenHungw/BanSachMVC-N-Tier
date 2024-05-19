@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BanSach2MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240519141932_AddShoppingCartToDb")]
+    [Migration("20240519143847_AddShoppingCartToDb")]
     partial class AddShoppingCartToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

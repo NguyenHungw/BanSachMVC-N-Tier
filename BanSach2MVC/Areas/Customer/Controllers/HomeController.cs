@@ -43,18 +43,22 @@ namespace BanSach2MVC.Areas.Customer.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public IActionResult Details(ShoppingCart shoppingCart)
+        public IActionResult Details(ShoppingCart shoppingCart , int productId,int count)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            shoppingCart.ApplicationUserId = claim.Value;
+            //shoppingCart.ApplicationUserId = claim.Value;
 
             // Tạo đối tượng ShoppingCart mới mà không thiết lập giá trị cho cột identity
-      /*       shoppingCart = new ShoppingCart
+            shoppingCart = new ShoppingCart
             {
+                ProductId = productId,
+                count= count,
+              
                 ApplicationUserId = claim.Value,
                 // Thiết lập các thuộc tính khác nếu cần
-            };*/
+
+            };
             _unitOfwork.ShoppingCart.Add(shoppingCart);
             _unitOfwork.Save();
 
