@@ -13,6 +13,7 @@ namespace Bans.Model
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
+        
         public int Id { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]

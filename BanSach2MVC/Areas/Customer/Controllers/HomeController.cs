@@ -50,19 +50,37 @@ namespace BanSach2MVC.Areas.Customer.Controllers
             //shoppingCart.ApplicationUserId = claim.Value;
 
             // Tạo đối tượng ShoppingCart mới mà không thiết lập giá trị cho cột identity
-            shoppingCart = new ShoppingCart
+            /*  shoppingCart = new ShoppingCart
+              {
+                  ProductId = productId,
+                  count= count,
+
+                  ApplicationUserId = claim.Value,
+                  // Thiết lập các thuộc tính khác nếu cần
+
+              };
+              _unitOfwork.ShoppingCart.Add(shoppingCart);
+              _unitOfwork.Save();*/
+
+            ShoppingCart cartObj = _unitOfwork.ShoppingCart.GetFistOrDefault(
+                u => u.ApplicationUserId == claim.Value && u.ProductId == shoppingCart.ProductId);
+            if(cartObj== null)
             {
-                ProductId = productId,
-                count= count,
-              
-                ApplicationUserId = claim.Value,
-                // Thiết lập các thuộc tính khác nếu cần
+                // _unitOfwork.ShoppingCart.Add(shoppingCart);
+                _unitOfwork.ShoppingCart.Add(new ShoppingCart
+                {
+                    ApplicationUserId = claim.Value,
+                    ProductId = shoppingCart.ProductId,
+                    count = shoppingCart.count
+                    // Không gán giá trị cho cột định danh Id
+                });
+            }
+            else
+            {
+                _unitOfwork.ShoppingCart.IncrementCount(cartObj,shoppingCart.count);
 
-            };
-            _unitOfwork.ShoppingCart.Add(shoppingCart);
+            }
             _unitOfwork.Save();
-
-
             return RedirectToAction(nameof(Index));
 
 
