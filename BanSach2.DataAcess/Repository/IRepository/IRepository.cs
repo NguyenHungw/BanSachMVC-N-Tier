@@ -12,10 +12,13 @@ namespace BanSach2.DataAcess.Repository.IRepository
     {
         // T-Category
         T GetFistOrDefault(Expression <Func<T, bool>> filter,string? includeProperties=null);
-        IEnumerable<T> GetAll(string? includeProperties = null);
+      //  IEnumerable<T> GetAll(string? includeProperties = null);
 
-       
-       // void GetAll(T entity);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>> filter=null,string? includeProperties = null);
+        //IEnumerable<T> GetAll2(Expression<Func<T, bool>> filter,string? includeProperties = null);
+
+
+        // void GetAll(T entity);
         void Add(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);

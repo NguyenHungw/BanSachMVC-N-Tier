@@ -25,7 +25,7 @@ namespace BanSach2.DataAcess.Repository
         }
 
         //include category,covertype
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+   /*     public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             if (Dbset == null)
             {
@@ -33,6 +33,27 @@ namespace BanSach2.DataAcess.Repository
             }
 
             IQueryable<T> query = Dbset;
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                // Sử dụng mảng kí tự phân cách để tăng tính linh hoạt
+                char[] separators = new char[] { ',', ';' };
+
+                foreach (var item in includeProperties.Split(separators, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(item.Trim());
+                }
+            }
+            return query.ToList();*/
+        
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter=null, string? includeProperties = null)
+        {
+        
+            IQueryable<T> query = Dbset;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
 
             if (!string.IsNullOrWhiteSpace(includeProperties))
             {
