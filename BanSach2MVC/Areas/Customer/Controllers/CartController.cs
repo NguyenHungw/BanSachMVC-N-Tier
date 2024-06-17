@@ -44,6 +44,29 @@ namespace BanSach2MVC.Areas.Customer.Controllers
 
             return View(model); 
         }
+        public IActionResult Summary()
+        {
+            //var claimIdentity = (ClaimsIdentity)User.Identity;
+            //var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            //ShoppingCartVM model = new ShoppingCartVM();
+            //{
+            //    //  IEnumerable<Bans.Model.ShoppingCart> ListCart = _unitOfWork.ShoppingCart.GetAll();
+            //    /* IEnumerable<Bans.Model.ShoppingCart> ListCart = _unitOfWork.ShoppingCart.GetAll(u=> u.ApplicationUserId == claim.Value,
+            //         includeProperties:"Product");*/
+
+            //    //  IEnumerable<Bans.Model.ShoppingCart> ListCart = _unitOfWork.ShoppingCart.GetAll();
+            //    model.ListCart = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value,
+            //        includeProperties: "Product");
+            //};
+            //foreach (var cart in model.ListCart)
+            //{
+            //    cart.Price = GetPriceBaseOnQuantity(cart.count,
+            //         cart.Product.Price100);
+            //    model.CartTotal += (cart.Product.Price100 * cart.count);
+            //}
+
+            return View();
+        }
         public IActionResult Plus(int cartId)
         {
             var cart = _unitOfWork.ShoppingCart.GetFistOrDefault(u=>u.Id == cartId);
