@@ -18,6 +18,11 @@ namespace BanSach2.DataAcess
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Company> Companys { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set;}
+        public DbSet<OrderHeader> OrderHeader { get; set; }
 
-}
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+
+
+
+    }
 }
