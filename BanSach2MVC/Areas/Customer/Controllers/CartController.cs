@@ -17,6 +17,7 @@ namespace BanSach2MVC.Areas.Customer.Controllers
         private readonly IUnitOfWork _unitOfWork;
         public ShoppingCartVM ShoppingCartVM { get; set; }
         public int OrderTotl { get; set; }
+
         public CartController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -34,38 +35,60 @@ namespace BanSach2MVC.Areas.Customer.Controllers
                 //  IEnumerable<Bans.Model.ShoppingCart> ListCart = _unitOfWork.ShoppingCart.GetAll();
                 model.ListCart = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value,
                     includeProperties: "Product");
+                model.orderHeader = new OrderHeader();
+
             };
             foreach(var cart in model.ListCart)
             {
                 cart.Price = GetPriceBaseOnQuantity(cart.count,
                      cart.Product.Price100);
                 model.CartTotal += (cart.Product.Price100 * cart.count);
+                model.orderHeader.OrderTotal += (cart.Price * cart.count);
+                
             }
 
             return View(model); 
         }
         public IActionResult Summary()
         {
-            //var claimIdentity = (ClaimsIdentity)User.Identity;
-            //var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            //ShoppingCartVM model = new ShoppingCartVM();
-            //{
-            //    //  IEnumerable<Bans.Model.ShoppingCart> ListCart = _unitOfWork.ShoppingCart.GetAll();
-            //    /* IEnumerable<Bans.Model.ShoppingCart> ListCart = _unitOfWork.ShoppingCart.GetAll(u=> u.ApplicationUserId == claim.Value,
-            //         includeProperties:"Product");*/
+            var claimidentity = (ClaimsIdentity)User.Identity;
+            var claim = claimidentity.FindFirst(ClaimTypes.NameIdentifier);
+            ShoppingCartVM model = new ShoppingCartVM();
+            {
+                //  ienumerable<bans.model.shoppingcart> listcart = _unitofwork.shoppingcart.getall();
+                /* ienumerable<bans.model.shoppingcart> listcart = _unitofwork.shoppingcart.getall(u=> u.applicationuserid == claim.value,
+                     includeproperties:"product");*/
 
-            //    //  IEnumerable<Bans.Model.ShoppingCart> ListCart = _unitOfWork.ShoppingCart.GetAll();
-            //    model.ListCart = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value,
-            //        includeProperties: "Product");
-            //};
-            //foreach (var cart in model.ListCart)
-            //{
-            //    cart.Price = GetPriceBaseOnQuantity(cart.count,
-            //         cart.Product.Price100);
-            //    model.CartTotal += (cart.Product.Price100 * cart.count);
-            //}
+                //  ienumerable<bans.model.shoppingcart> listcart = _unitofwork.shoppingcart.getall();
+                model.ListCart = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value,
+                    includeProperties: "Product");
+                model.orderHeader= new OrderHeader();
 
-            return View();
+            };
+            model.orderHeader.ApplicationUser = _unitOfWork.ApplicationUser.GetFistOrDefault(
+                u=>u.Id==claim.Value
+                );
+            model.orderHeader.Name= model.orderHeader.ApplicationUser.Name;
+            model.orderHeader.PhoneNumber = model.orderHeader.ApplicationUser.PhoneNumber;
+
+            model.orderHeader.City = model.orderHeader.ApplicationUser.City;
+
+            model.orderHeader.State = model.orderHeader.ApplicationUser.State;
+            model.orderHeader.PostalCode = model.orderHeader.ApplicationUser.PostalCode;
+
+
+            foreach (var cart in model.ListCart)
+            {
+                cart.Price = GetPriceBaseOnQuantity(cart.count,
+                     cart.Product.Price100);
+                model.CartTotal += (cart.Product.Price100 * cart.count);
+                model.orderHeader.OrderTotal += (cart.Price * cart.count);
+
+            }
+
+            return View(model);
+            
+
         }
         public IActionResult Plus(int cartId)
         {

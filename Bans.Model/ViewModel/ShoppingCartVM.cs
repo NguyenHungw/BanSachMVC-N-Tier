@@ -10,5 +10,6 @@ namespace Bans.Model.ViewModel
     {
         public IEnumerable<ShoppingCart> ListCart { get; set; }
         public double CartTotal { get; set; }
+        public OrderHeader orderHeader { get; set; }
     }
 }

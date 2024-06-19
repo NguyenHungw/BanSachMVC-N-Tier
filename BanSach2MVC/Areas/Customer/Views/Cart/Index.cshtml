@@ -33,7 +33,9 @@
                                         <p><small>@item.Product.Description</small></p>
                                     </div>
                                     <div class="col-12 col-md-6 text-end">
+                                        @* <h6><strong>@item.Price.ToString("c") <span class="text-muted">x</span> @item.count</strong></h6> *@
                                         <h6><strong>@item.Price.ToString("c") <span class="text-muted">x</span> @item.count</strong></h6>
+
                                         <div class="row align-items-center">
                                             <div class="col-6 col-md-4">
                                                 <div class="btn-group">
@@ -79,7 +81,7 @@
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between bg-light">
                                 <span class="text-info">Total (USD)</span>
-                                <strong class="text-info">@Model.CartTotal.ToString("c")$$$</strong>
+                                <strong class="text-info">@Model.orderHeader.OrderTotal.ToString("c")$$$</strong>
                             </li>
                         </ul>
                     </div>

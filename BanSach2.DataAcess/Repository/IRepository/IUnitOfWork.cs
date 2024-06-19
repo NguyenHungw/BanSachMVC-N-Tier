@@ -14,6 +14,10 @@ namespace BanSach2.DataAcess.Repository.IRepository
         ICompanyRepository Company { get; }
         IApplicationUserRepository ApplicationUser { get; }
         IShoppingCartRepository ShoppingCart { get; }
+        IOderHeaderRepository OrderHeader { get; }
+        IOrderDetailsRepository OrderDetails { get; }
+
+
         void Save();
     }
 }

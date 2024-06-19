@@ -17,6 +17,8 @@ namespace BanSach2.DataAcess.Repository
         public ICompanyRepository Company { get; private set; }
         public IApplicationUserRepository ApplicationUser { get; private set; }
         public IShoppingCartRepository ShoppingCart { get; private set; }
+        public IOrderDetailsRepository OrderDetails {  get; private set; }
+        public IOderHeaderRepository OrderHeader { get; private set; }
 
         private readonly ApplicationDbContext _db;
 
@@ -29,6 +31,8 @@ namespace BanSach2.DataAcess.Repository
             Company = new CompanyRepository(_db);
             ApplicationUser = new ApplicationUserRepository(_db);
             ShoppingCart = new ShoppingCartRepository(_db);
+            OrderDetails = new OrderDetailsRepository(_db);
+            OrderHeader = new OrderHeaderRepository(_db);
 
         }
 
