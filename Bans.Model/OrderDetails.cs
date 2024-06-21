@@ -12,7 +12,7 @@ namespace Bans.Model
     public class OrderDetails
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int OrderID {  get; set; }
         [ForeignKey(nameof(OrderID))]
 
