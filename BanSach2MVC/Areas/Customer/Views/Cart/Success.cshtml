@@ -1,0 +1,14 @@
+﻿@model Bans.Model.OrderHeader
+
+@{
+    ViewData["Title"] = "Payment Success";
+}
+
+<h2>Payment Success</h2>
+<p>Your payment was successful. Thank you for your purchase!</p>
+<p>Order ID: @Model.Id</p>
+<p>Order Total: @Model.OrderTotal</p>
+<p>Order Date: @Model.OrderDate</p>
+<p>Order Status: @Model.OrderStatus</p>
+
+<!-- Add more order details as needed -->

@@ -1,5 +1,6 @@
 ﻿@model Bans.Model.ViewModel.ShoppingCartVM
-
+@using Microsoft.Extensions.Options
+@inject IOptions<BanSach2.Utility.StriperSettings> Stripe
 <form method="post">
     <br />
     <div class="container">
